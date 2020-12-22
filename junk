@@ -1,0 +1,58 @@
+let embed = document.getElementById('embed');
+<button value='./assets/IOT/IOT-Book.pdf' id='1'>IOT-Book</button> | <button value='./assets/IOT/IOT-MCQ.pdf' id='2'>IOT-MCQ</button>
+let spanList = document.querySelectorAll('button');
+console.log(spanList);
+spanList.forEach((span) => {
+    if (!isNaN(span.id)) {
+        console.log('test');
+        span.onclick = function (event) {
+            console.log(span.value)
+            embed.src = span.value;
+        };
+    }
+});
+
+
+async function viaContentsApi({
+	user,
+	repository,
+	ref = 'HEAD',
+	directory,
+	token,
+	getFullData = false
+}) {
+	const files = [];
+	const requests = [];
+    const request = new XMLHttpRequest();
+    request.setRequestHeader('token',token)
+    request.open('GET', `https://api.github.com/repos/Me-N-The-Bois/pdfview.github.io/contents/assets?ref=main`, false);
+    request.setRequestHeader('token', process.env.token);
+    request.responseType = 'arraybuffer';
+    if (xmlhttp.status == 200) {
+        //result = xmlhttp.responseText;
+        for (const item of request.response) {
+            if (item.type === 'file') {
+                files.push(getFullData ? item : item.path);
+            } else if (item.type === 'dir') {
+                files.push(viaContentsApi({
+                    user,
+                    repository,
+                    ref,
+                    directory: item.path,
+                    token,
+                    getFullData
+                }));
+            }
+        }
+	return files.concat(...await Promise.all(requests));
+}
+
+
+function loadFile(filePath) {
+    let result = null;
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.open("GET", filePath, false);
+    xmlhttp.send();
+    
+    return result;
+}
