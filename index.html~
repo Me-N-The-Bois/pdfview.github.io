@@ -12,7 +12,7 @@
     <body>
         <header class='headings'>
             <h1>Loaded in? Today is <u><span id='todays-subject'></span></u></h1>
-<!--             <h3><span>SIC MCQ</span> | <span>SIC Book</span></h3> -->
+            <h3><span>SIC MCQ</span> | <span>SIC Book</span></h3>
         </header>
         <p style="text-align:center;">
 	    LINKS:
